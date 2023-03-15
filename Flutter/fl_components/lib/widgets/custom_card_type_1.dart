@@ -15,8 +15,8 @@ class CustomCardType1 extends StatelessWidget {
 
           const ListTile(
             leading: Icon( Icons.photo_album_outlined, color: AppTheme.primary  ),
-            title: Text('Soy un título'),
-            subtitle: Text('Ad et cillum incididunt duis Lorem consectetur dolor ex irure consectetur do velit enim eiusmod. Mollit aliquip amet amet elit deserunt ex incididunt magna laboris.'),
+            title: Text('Coincidir'),
+            subtitle: Text('.'),
           ),
         
           Padding(
@@ -26,11 +26,11 @@ class CustomCardType1 extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {}, 
-                  child: const Text('Cancel'),
+                  child: const Text('Paso'),
                 ),
                 TextButton(
                   onPressed: () {}, 
-                  child: const Text('Ok'),
+                  child: const Text('Si'),
                 ),
               ],
             ),

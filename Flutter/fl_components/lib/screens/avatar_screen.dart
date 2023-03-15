@@ -9,11 +9,11 @@ class AvatarScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lenguaje oculto del amar'),
-        actions: [
+        actions:[
           Container(
             margin: const EdgeInsets.only( right: 5),
-            child: CircleAvatar(
-              child: const Text('S'),
+            child: const CircleAvatar(
+              child: Text('S'),
               backgroundColor: Color.fromARGB(255, 26, 49, 126)
             ),
           )
