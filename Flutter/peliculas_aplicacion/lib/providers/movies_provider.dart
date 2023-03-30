@@ -37,9 +37,9 @@ import 'package:peliculas_aplicacion/models/search_response.dart';
 
 class MoviesProvider extends ChangeNotifier {
 
-   String _apiKey = 'c0138205d3b2dc6403ce71d9d5c851d2';
-  String _baseUrl  = 'api.themoviedb.org';
-  String _language = 'es-ES';
+  final String _apiKey = 'c0138205d3b2dc6403ce71d9d5c851d2';
+  final String _baseUrl  = 'api.themoviedb.org';
+  final String _language = 'es-ES';
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies   = [];
@@ -49,17 +49,16 @@ class MoviesProvider extends ChangeNotifier {
   int _popularPage = 0;
 
   final debouncer = Debouncer(
-    duration: Duration( milliseconds: 500 ),
+    duration: const Duration( milliseconds: 500 ),
   );
 
-  final StreamController<List<Movie>> _suggestionStreamContoller = new StreamController.broadcast();
-  Stream<List<Movie>> get suggestionStream => this._suggestionStreamContoller.stream;
+  final StreamController<List<Movie>> _suggestionStreamContoller = StreamController.broadcast();
+  Stream<List<Movie>> get suggestionStream => _suggestionStreamContoller.stream;
 
 
 
   MoviesProvider() {
-    print('MoviesProvider inicializado');
-
+    //print('MoviesProvider inicializado');
      getOnDisplayMovies();
      getPopularMovies();
 
@@ -92,7 +91,7 @@ class MoviesProvider extends ChangeNotifier {
 
     _popularPage++;
 
-    final jsonData = await this._getJsonData('3/movie/popular', _popularPage );
+    final jsonData = await _getJsonData('3/movie/popular', _popularPage );
     final popularResponse = PopularResponse.fromJson( jsonData );
     
     popularMovies = [ ...popularMovies, ...popularResponse.results ];
@@ -103,7 +102,7 @@ class MoviesProvider extends ChangeNotifier {
 
     if( moviesCast.containsKey(movieId) ) return moviesCast[movieId]!;
 
-    final jsonData = await this._getJsonData('3/movie/$movieId/credits');
+    final jsonData = await _getJsonData('3/movie/$movieId/credits');
     final creditsResponse = CreditsResponse.fromJson( jsonData );
 
     moviesCast[movieId] = creditsResponse.cast;
@@ -130,15 +129,15 @@ class MoviesProvider extends ChangeNotifier {
     debouncer.value = '';
     debouncer.onValue = ( value ) async {
       // print('Tenemos valor a buscar: $value');
-      final results = await this.searchMovies(value);
-      this._suggestionStreamContoller.add( results );
+      final results = await searchMovies(value);
+      _suggestionStreamContoller.add( results );
     };
 
-    final timer = Timer.periodic(Duration(milliseconds: 300), ( _ ) { 
+    final timer = Timer.periodic(const Duration(milliseconds: 300), ( _ ) { 
       debouncer.value = searchTerm;
     });
 
-    Future.delayed(Duration( milliseconds: 301)).then(( _ ) => timer.cancel());
+    Future.delayed(const Duration( milliseconds: 301)).then(( _ ) => timer.cancel());
   }
 
 
